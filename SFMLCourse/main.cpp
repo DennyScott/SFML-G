@@ -16,10 +16,15 @@ int main()
 	bool play = true;
 	sf::Event event;
 
+	//States for buttons/events
 	bool isAPressed = false;
 	bool isAReleased = false;
-
 	bool spaceKey = false;
+	bool leftClick = false;
+
+	//Variables
+	int numberOfClicks = 0;
+	int mouseX = 0, mouseY = 0;
 
 	//Game loop
 	while (play)
@@ -48,6 +53,17 @@ int main()
 				spaceKey = false;
 			}
 
+			if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left)
+			{
+				leftClick = true;
+			}
+
+			if (event.type == sf::Event::MouseMoved)
+			{
+				mouseX = event.mouseMove.x;
+				mouseY = event.mouseMove.y;
+			}
+
 			if (event.type == sf::Event::Closed)
 			{
 				//Stop the game
@@ -70,15 +86,16 @@ int main()
 			isAReleased = false;
 		}
 
-		if (spaceKey)
+		if (leftClick)
 		{
-			std::cout << "SPACE\n";
+			numberOfClicks++;
+
+			std::cout << "Number of clcks is " << numberOfClicks << "\n";
+
+			leftClick = false;
 		}
 
-		if (spaceKey == false)
-		{
-			std::cout << "NOT SPACE\n";
-		}
+		std::cout << "Mouse x: " << mouseX << " Mouse y: " << mouseY << "\n";
 
 		//RENDERING
 		window.clear();
