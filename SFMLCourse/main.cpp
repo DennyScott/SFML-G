@@ -6,9 +6,33 @@
 
 int main()
 {
+	//Creation
 	sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Game");
+	window.setFramerateLimit(60);
 
-	std::cin.get();
+	bool play = true;
+
+	//Game loop
+	while (play)
+	{
+		//EVENTS
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+
+		}
+		
+		//LOGIC
+
+
+		//RENDERING
+		window.clear();
+
+		window.display();
+	}
+
+	//Clean Up
+	window.close();
 
 	return 0;
 }
