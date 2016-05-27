@@ -11,15 +11,29 @@ int main()
 	window.setFramerateLimit(60);
 
 	bool play = true;
+	sf::Event event;
 
 	//Game loop
 	while (play)
 	{
 		//EVENTS
-		sf::Event event;
+
 		while (window.pollEvent(event))
 		{
+			if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A)
+			{
+				std::cout << "The A key has been pressed\n";
+			}
 
+			if (event.type == sf::Event::KeyReleased && event.key.code == sf::Keyboard::A)
+			{
+				std::cout << "The A key has been released\n";
+			}
+
+			if (event.type == sf::Event::Closed)
+			{
+				play = false;
+			}
 		}
 		
 		//LOGIC
