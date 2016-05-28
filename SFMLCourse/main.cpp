@@ -1,5 +1,6 @@
 //Libraries
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 
 //Global Variables, functions and classes
@@ -29,6 +30,64 @@ int main()
 	//Variables
 	int numberOfClicks = 0;
 	int mouseX = 0, mouseY = 0;
+	int rectXPosition = 0;
+
+
+	//Images
+	sf::Texture image1;
+	if (image1.loadFromFile("Data/image2.png") == 0)
+	{
+		return 1;
+	}
+
+	//Render shapes
+	sf::RectangleShape rect;
+	rect.setSize(sf::Vector2f(100, 100));
+	rect.setPosition(0, 0);
+	rect.setFillColor(sf::Color::White);
+	rect.setTexture(&image1);
+
+	sf::CircleShape circle;
+	circle.setRadius(50);
+	circle.setPosition(400, 300);
+	circle.setFillColor(sf::Color::Blue);
+
+	//Font
+	sf::Font font;
+	if (font.loadFromFile("Data/arial.ttf") == 0)
+	{
+		return 1;
+	}
+
+	//Text
+	sf::Text title;
+	title.setFont(font);
+	title.setCharacterSize(30);
+	title.setString("Hello World!");
+	title.setPosition(300, 50);
+	title.setColor(sf::Color::Magenta);
+
+	//Sounds
+	sf::SoundBuffer explosionBuffer;
+	if (explosionBuffer.loadFromFile("Data/explosion1.wav") == 0)
+	{
+		return -1;
+	}
+
+	sf::Sound explosion;
+	explosion.setBuffer(explosionBuffer);
+	explosion.setVolume(60);
+
+	//Music
+	sf::Music music;
+	if (music.openFromFile("Data/music.ogg") == 0)
+	{
+		return 1;
+	}
+
+	music.setVolume(5);
+	music.setLoop(true);
+	music.play();
 
 	//Game loop
 	while (play)
@@ -39,6 +98,7 @@ int main()
 		{
 			if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::A)
 			{
+				explosion.play();
 				isAPressed = true;
 			}
 
@@ -155,10 +215,17 @@ int main()
 			isEnterReleased = false;
 		}
 
-		//std::cout << "Mouse x: " << mouseX << " Mouse y: " << mouseY << "\n";
+		std::cout << "Mouse x: " << mouseX << " Mouse y: " << mouseY << "\n";
+
+		rectXPosition++;
+		rect.setPosition(rectXPosition, rectXPosition);
 
 		//RENDERING
 		window.clear();
+
+		window.draw(rect);
+		window.draw(circle);
+		window.draw(title);
 
 		window.display();
 	}
