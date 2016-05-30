@@ -37,6 +37,11 @@ int main()
 	shape1.setSize(sf::Vector2f(50, 50));
 	shape1.setPosition(400, 300);
 
+	sf::RectangleShape shape2;
+	shape2.setSize(sf::Vector2f(100, 200));
+	shape2.setPosition(200, 200);
+	shape2.setFillColor(sf::Color::Red);
+
 	//Game loop
 	while (play)
 	{
@@ -122,7 +127,19 @@ int main()
 			yVelocity = 0;
 
 		//Move
-		shape1.move(xVelocity, yVelocity);
+		shape1.move(xVelocity, 0);
+
+		if (shape1.getGlobalBounds().intersects(shape2.getGlobalBounds()))
+		{
+			shape1.move(-xVelocity, 0);
+		}
+
+		shape1.move(0, yVelocity);
+
+		if (shape1.getGlobalBounds().intersects(shape2.getGlobalBounds()))
+		{
+			shape1.move(0, -yVelocity);
+		}
 
 		//Collision
 
@@ -130,6 +147,7 @@ int main()
 		window.clear();
 
 		window.draw(shape1);
+		window.draw(shape2);
 
 		window.display();
 	}
